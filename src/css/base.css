@@ -1,0 +1,22 @@
+:root {
+  --font-family: 'Montserrat', sans-serif;
+  --font-button: 500 16px/1.5 'Montserrat', sans-serif;
+  --font-search: 400 16px/1.5 'Montserrat', sans-serif;
+  --font-title: 600 12px/1.33 'Montserrat', sans-serif;
+  --font-title-value: 400 12px/2 'Montserrat', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  letter-spacing: 0.04em;
+  color: #808080;
+  width: 1158px;
+  margin: 0 auto;
+}
+
+main {
+  flex-grow: 1;
+}
+main:has(.back-link) {
+  text-align: center;
+}
