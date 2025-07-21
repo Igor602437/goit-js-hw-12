@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Gallery</title>
+    <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-B7yatFIi.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-BdnZJFW9.css">
+  </head>
+  <body>
+    <main>
+      <section class="gallery-section js-section">
+        <div class="container">
+          <form class="form js-form">
+            <label>
+              <input
+                class="input-form"
+                type="text"
+                name="search_text"
+                placeholder="Search images..."
+                required
+              />
+            </label>
+            <button class="form-button js-form-button" type="submit">
+              Search
+            </button>
+          </form>
+          <ul class="gallery js-gallery"></ul>
+
+          <span class="loader js-loader is-hidden">L &nbsp; ading</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
