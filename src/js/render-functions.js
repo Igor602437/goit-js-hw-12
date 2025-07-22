@@ -18,7 +18,7 @@ export function createGallery(images) {
         comments,
         downloads,
       }) => `
-  <li class="gallery-card">
+  <li class="gallery-card js-gallery-card">
     <a href="${largeImageURL}">
       <img class="gallery-img" src="${webformatURL}" alt="${tags}" />
     </a>
@@ -45,20 +45,19 @@ export function createGallery(images) {
     )
     .join('');
 
-  refs.galleryList.innerHTML = markup;
+  refs.galleryList.insertAdjacentHTML('beforeend', markup);
 
-  hideLoader();
   lightbox.refresh();
 }
 
-const loaderCondition = refs.loader.classList;
-
-export const showLoader = () => {
-  loaderCondition.remove('is-hidden');
-};
-
-export const hideLoader = () => loaderCondition.add('is-hidden');
-
-export const clearMarkUp = () => {
+export const clearGallery = () => {
   refs.galleryList.innerHTML = '';
 };
+
+const loaderCondition = refs.loader.classList;
+export const showLoader = () => loaderCondition.remove('is-hidden');
+export const hideLoader = () => loaderCondition.add('is-hidden');
+
+const loaderImgButton = refs.loadMoreButton.classList;
+export const showLoadMoreButton = () => loaderImgButton.remove('is-hidden');
+export const hideLoadMoreButton = () => loaderImgButton.add('is-hidden');
