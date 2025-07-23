@@ -11,9 +11,8 @@ import {
   showLoadMoreButton,
 } from './js/render-functions';
 
-let page = 0;
+let page = 1;
 let searchedValue = '';
-let offsetY = null;
 let inputEl = null;
 
 async function onCreateGallery(event) {
@@ -39,9 +38,6 @@ async function onCreateGallery(event) {
 
 async function renderGallery() {
   try {
-    if (page > 1) {
-      updateLastLi();
-    }
     hideLoadMoreButton();
     showLoader();
 
@@ -53,48 +49,52 @@ async function renderGallery() {
           'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
       });
-      hideLoader();
-      inputEl.value = '';
+      // hideLoader();
+
       return;
     }
-    const markup = createGallery(arr.hits);
+    createGallery(arr.hits);
+    if (page > 1) {
+      scroll();
+    }
 
-    if (arr.totalHits > page * perFotoLimit) {
+    const totalPages = Math.ceil(arr.totalHits / perFotoLimit);
+    if (totalPages > page) {
       page += 1;
     } else {
       hideLoadMoreButton();
-      hideLoader();
-      refs.loadMoreButton.removeEventListener('click', renderGallery);
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
         position: 'topRight',
       });
       return;
     }
-    hideLoader();
     showLoadMoreButton();
-    function updateLastLi() {
-      let rect = refs.elem.lastElementChild;
-      rect.classList.add('last-item');
-      let rected = rect.getBoundingClientRect();
-      offsetY = rected.height + rected.top;
-    }
-    const scroll = () => {
-      window.scrollBy({
-        top: offsetY,
-        left: 0,
-        behavior: 'smooth',
-      });
-    };
-    if (page > 2) {
-      scroll();
-    }
   } catch (error) {
+    console.log(error);
+    iziToast.error({
+      message: `Sorry, you have encountered an error: ${error}`,
+      position: 'topRight',
+    });
+  } finally {
     hideLoader();
-    console.log(err);
   }
+}
 
-  refs.loadMoreButton.addEventListener('click', renderGallery);
+function getCardHeight() {
+  const card = document.querySelector('.js-gallery-card');
+  if (!card) return 0;
+  const { height } = card.getBoundingClientRect();
+  return height;
+}
+function scroll() {
+  const cardHeight = getCardHeight();
+  window.scrollBy({
+    top: (cardHeight + 24) * 2,
+    left: 0,
+    behavior: 'smooth',
+  });
 }
 
 refs.inputForm.addEventListener('submit', onCreateGallery);
+refs.loadMoreButton.addEventListener('click', renderGallery);
